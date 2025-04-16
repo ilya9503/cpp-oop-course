@@ -18,12 +18,15 @@ public:
         this->buffer = new char[length+1]{0};
         strncpy(this->buffer, other.buffer, length);        
     }
-    StringChars operator+(const StringChars& right) const
+    StringChars operator+(const StringChars& obj) const
     {
-        char* res = this->buffer;
-        res = strcat(res, right.buffer);
-        res[strlen(res)+1] = '\0';
-        return StringChars(res);
+        size_t newLength = length + obj.length;
+        char* newBuffer = new char[newLength + 1];
+        strcpy(newBuffer, buffer);
+        strcat(newBuffer, obj.buffer);
+        StringChars newObj(newBuffer);
+        delete [] newBuffer;
+        return newObj;
     }
     ~StringChars()
     {
